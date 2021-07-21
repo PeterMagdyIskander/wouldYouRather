@@ -30,11 +30,11 @@ export function receiveQuestions (questions) {
   export function handleVoteOnQuestion(info){
     return(dispatch)=>{
       
-      return _saveQuestionAnswer(info).then(()=>{
-        dispatch(vote(info))
-      }).catch((e)=>{
+      return _saveQuestionAnswer(info).catch((e)=>{
         console.warn("error in voting",e);
         alert("there was an error voting on question")
+      }).then(()=>{
+        dispatch(vote(info))
       })
     }
   }

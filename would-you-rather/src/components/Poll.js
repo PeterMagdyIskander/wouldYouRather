@@ -14,11 +14,11 @@ class Poll extends Component {
   };
   handleOnSubmit = (e) => {
     e.preventDefault();
-    const { dispatch, qid, authedUser } = this.props;
+    const { dispatch,} = this.props;
     const { option } = this.state.selected;
 
     dispatch(
-      handleVoteOnQuestion({ authedUser: authedUser, qid: qid, answer: option })
+      handleVoteOnQuestion({ authedUser: this.props.authedUser, qid: this.props.qid, answer: option })
     );
     console.log("You have selected:", this.state.selected);
   };
@@ -64,7 +64,7 @@ class Poll extends Component {
               onChange={this.handleOnChange}
             />
 
-            <label for={question.optionOne.text}>
+            <label htmlFor={question.optionOne.text}>
               {question.optionOne.text}
             </label>
             <br />
@@ -76,7 +76,7 @@ class Poll extends Component {
               onChange={this.handleOnChange}
             />
 
-            <label for={question.optionTwo.text}>
+            <label htmlFor={question.optionTwo.text}>
               {question.optionTwo.text}
             </label>
             <br />
@@ -105,7 +105,7 @@ function mapStateToProps({ questions, users, authedUser }, props) {
     question: question,
     answered: userAnsweredIds.includes(id) ? true : false,
     choice: choice,
-    id: id,
+    qid: id,
   };
 }
 
