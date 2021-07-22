@@ -29,6 +29,7 @@ export function receiveQuestions (questions) {
   }
 
   export function handleVoteOnQuestion(info){
+    console.log(info)
     return(dispatch)=>{
       
       return _saveQuestionAnswer(info).catch((e)=>{

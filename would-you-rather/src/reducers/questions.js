@@ -27,8 +27,8 @@ export default function questions (state = {}, action) {
             ...state,
             [action.qid]:{
               ...state[action.qid],
-              optionOne: Object.assign({},[action.qid].optionOne,{votes:votes1}),
-              optionTwo: Object.assign({},[action.qid].optionTwo,{votes:votes2}) ,
+              optionOne: Object.assign({},{votes:votes1},{text:state[action.qid].optionOne.text}),
+              optionTwo: Object.assign({},{votes:votes2},{text:state[action.qid].optionTwo.text}) ,
             }
           }
       default :

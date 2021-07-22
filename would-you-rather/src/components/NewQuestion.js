@@ -64,5 +64,9 @@ class NewQuestion extends Component {
       )
     }
   }
-
-export default connect()(NewQuestion)
+function mapStateToProps({authedUser}){
+  return{
+    authedUser:authedUser,
+  }
+}
+export default connect(mapStateToProps)(NewQuestion)
