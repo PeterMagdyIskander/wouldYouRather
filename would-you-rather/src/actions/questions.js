@@ -1,6 +1,7 @@
 import {_saveQuestion,_saveQuestionAnswer} from '../utils/_DATA'
+import { showLoading,hideLoading } from 'react-redux-loading'
 export const RECEIVE_QUESTIONS = 'RECEIVE_QUESTIONS'
-export const ADD_QUESTIONS='QUESTIONS'
+export const ADD_QUESTIONS='ADD_QUESTIONS'
 export const VOTE_ON_QUESTION='VOTE_ON_QUESTION'
 
 
@@ -39,13 +40,15 @@ export function receiveQuestions (questions) {
     }
   }
 
-  export function handleAddQuestion(text1,text2){
+  export function handleAddQuestion(optionOne,optionTwo){
     return (dispatch,getState)=>{
       const {authedUser}=getState()
-      _saveQuestion({
-        text1,
-        text2,
+      dispatch(showLoading())
+      return _saveQuestion({
+        optionOne,
+        optionTwo,
         author:authedUser
       }).then((question)=>dispatch(addQuestions(question)))
+      .then(()=>dispatch(hideLoading()))
     }
   }
