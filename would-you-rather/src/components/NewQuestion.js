@@ -2,6 +2,8 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { handleAddQuestion } from '../actions/questions'
 
+import { Redirect, withRouter } from "react-router-dom";
+
 class NewQuestion extends Component {
     state = {
         text1: '',
@@ -26,12 +28,15 @@ class NewQuestion extends Component {
         e.preventDefault()
     
         const { text1,text2 } = this.state
+        console.log(text1,text2)
         const {dispatch}=this.props
         dispatch(handleAddQuestion(text1,text2))
-    
+        //this.props.history.push(`/polls/${this.props.users[this.props.authedUser].questions[this.props.users[this.props.authedUser].questions.length]}`)
+
         this.setState(() => ({
           text1: '',
           text2: '',
+          
         }))
       }
 
@@ -64,9 +69,10 @@ class NewQuestion extends Component {
       )
     }
   }
-function mapStateToProps({authedUser}){
+function mapStateToProps({authedUser,users}){
   return{
     authedUser:authedUser,
+    users:users
   }
 }
 export default connect(mapStateToProps)(NewQuestion)

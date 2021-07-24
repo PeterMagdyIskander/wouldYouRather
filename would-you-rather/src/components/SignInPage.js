@@ -6,15 +6,19 @@ import { Redirect } from "react-router-dom";
 class SignInPage extends Component {
   state = {
     account: false,
+    selectedUser:'none',
   };
 
   handleOnChange = (e) => {
-    const { dispatch } = this.props;
-    dispatch(setAuthedUser(e.target.value));
+    this.setState(()=>({
+      selectedUser:e.target.value,
+    }))
 
     e.preventDefault();
   };
   handleOnClick=()=> {
+    const { dispatch } = this.props;
+    dispatch(setAuthedUser(this.state.selectedUser));
     this.setState(() => ({ account: true }))
   }
 
@@ -49,12 +53,7 @@ class SignInPage extends Component {
 
 function mapStateToProps({ users }) {
   return {
-    usersID: Object.keys(users).sort(
-      (a, b) =>
-        users[b].questions.length +
-        Object.keys(users[b].answers).length -
-        (users[a].questions.length + Object.keys(users[a].answers).length)
-    ),
+    usersID: Object.keys(users),
   };
 }
 

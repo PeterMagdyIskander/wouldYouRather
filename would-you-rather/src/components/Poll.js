@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { handleVoteOnQuestion } from "../actions/questions";
+import { addAnswerToUser } from "../actions/users";
+import { withRouter } from "react-router-dom";
 
 class Poll extends Component {
   state = {
@@ -14,13 +16,25 @@ class Poll extends Component {
   };
   handleOnSubmit = (e) => {
     e.preventDefault();
-    const { dispatch,} = this.props;
-    const  option  = this.state.selected;
+    const { dispatch } = this.props;
+    const option = this.state.selected;
 
     dispatch(
-      handleVoteOnQuestion({ authedUser: this.props.authedUser, qid: this.props.qid, answer: option ,optionOneText : this.props.question.optionOne.text , optionTwoText :this.props.question.optionTwo.text })
+      handleVoteOnQuestion({
+        authedUser: this.props.authedUser,
+        qid: this.props.qid,
+        answer: option,
+        optionOneText: this.props.question.optionOne.text,
+        optionTwoText: this.props.question.optionTwo.text,
+      })
     );
-    console.log("You have selected:", this.state.selected);
+    dispatch(
+      addAnswerToUser(
+        this.props.qid,
+        option,
+        this.props.authedUser,
+      )
+    );
   };
 
   render() {
@@ -60,7 +74,7 @@ class Poll extends Component {
               type="radio"
               id={question.optionOne.text}
               name="choices"
-              value='optionOne'
+              value="optionOne"
               onChange={this.handleOnChange}
             />
 
@@ -72,7 +86,7 @@ class Poll extends Component {
               type="radio"
               id={question.optionTwo.text}
               name="choices"
-              value='optionTwo'
+              value="optionTwo"
               onChange={this.handleOnChange}
             />
 
@@ -106,8 +120,8 @@ function mapStateToProps({ questions, users, authedUser }, props) {
     answered: userAnsweredIds.includes(id) ? true : false,
     choice: choice,
     qid: id,
-    authedUser:authedUser,
+    authedUser: authedUser,
   };
 }
 
-export default connect(mapStateToProps)(Poll);
+export default withRouter(connect(mapStateToProps)(Poll))

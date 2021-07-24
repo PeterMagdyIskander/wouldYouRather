@@ -8,7 +8,6 @@ export default function questions (state = {}, action) {
           ...action.questions
         }
       case ADD_QUESTIONS:
-        //const {question}=action
         return{
           ...state,
           [action.question.id]:action.question
