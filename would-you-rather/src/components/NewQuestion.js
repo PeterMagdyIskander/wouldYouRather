@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { handleAddQuestion } from '../actions/questions'
 
-import { Redirect, withRouter } from "react-router-dom";
 
 class NewQuestion extends Component {
     state = {

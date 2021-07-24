@@ -17,7 +17,6 @@ export default function users (state = {}, action) {
         }
       }
     case ADD_ANSWER_TO_USER :
-      
       return{
         ...state,
         [action.userId]:{
