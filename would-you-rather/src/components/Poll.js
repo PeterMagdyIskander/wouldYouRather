@@ -28,21 +28,17 @@ class Poll extends Component {
         optionTwoText: this.props.question.optionTwo.text,
       })
     );
-    dispatch(
-      addAnswerToUser(
-        this.props.qid,
-        option,
-        this.props.authedUser,
-      )
-    );
+    dispatch(addAnswerToUser(this.props.qid, option, this.props.authedUser));
   };
 
   render() {
-    const { question, answered, choice,found } = this.props;
-
-    if (answered === true&&found===true) {
+    const { question, answered, choice, found} = this.props;
+    const total= question.optionOne.votes.length+question.optionTwo.votes.length;
+    console.log(total);
+    if (answered === true && found === true) {
       return (
         <div>
+          
           <h3>{question.author} asks:</h3>
           <h2>Would you Rather ...</h2>
           {choice === "optionOne" ? (
@@ -51,20 +47,28 @@ class Poll extends Component {
                 {question.optionOne.text}{" "}
                 <span style={{ color: "red" }}> you voted</span>
               </p>{" "}
+              <p> Number of votes {question.optionOne.votes.length}</p>
+              <p>{(question.optionOne.votes.length/total).toFixed(2)*100}%</p>
               <br /> <p>{question.optionTwo.text} </p>{" "}
+              <p> Number of votes {question.optionTwo.votes.length}</p>
+              <p>{(question.optionTwo.votes.length/total).toFixed(2)*100}%</p>
             </div>
           ) : (
             <div>
               <p>{question.optionOne.text} </p> <br />{" "}
+              <p> Number of votes {question.optionOne.votes.length}</p>
+              <p>{(question.optionOne.votes.length/total).toFixed(2)*100}%</p>
               <p>
                 {question.optionTwo.text}{" "}
                 <span style={{ color: "red" }}> you voted</span>
+                <p> Number of votes {question.optionTwo.votes.length}</p>
+              <p>{(question.optionTwo.votes.length/total).toFixed(2)*100}%</p>
               </p>{" "}
             </div>
           )}
         </div>
       );
-    } else if(found===true) {
+    } else if (found === true) {
       return (
         <div>
           <h3>{question.author} asks:</h3>
@@ -101,10 +105,8 @@ class Poll extends Component {
           </form>
         </div>
       );
-    }else{
-      return(
-        <h3>404 question not found</h3>
-      )
+    } else {
+      return <h3>404 question not found</h3>;
     }
   }
 }
@@ -125,8 +127,9 @@ function mapStateToProps({ questions, users, authedUser }, props) {
     choice: choice,
     qid: id,
     authedUser: authedUser,
-    found:Object.keys(questions).includes(id)?true:false
+    found: Object.keys(questions).includes(id) ? true : false,
+    questions:questions,
   };
 }
 
-export default withRouter(connect(mapStateToProps)(Poll))
+export default withRouter(connect(mapStateToProps)(Poll));

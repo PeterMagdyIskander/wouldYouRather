@@ -28,7 +28,7 @@ class App extends Component {
             <PrivateRoute path="/"  isAuthenticated={this.props.authedUser}  exact component={Home}  />
             <PrivateRoute path="/leaderBoard" isAuthenticated={this.props.authedUser} component={LeaderBoard} />
             <PrivateRoute path="/add" isAuthenticated={this.props.authedUser} component={NewQuestion} />
-            <PrivateRoute path="/polls/:id" isAuthenticated={this.props.authedUser} component={Poll}  />
+            <PrivateRoute path="/questions/:id" isAuthenticated={this.props.authedUser} component={Poll}  />
             <Route path="/signIn" isAuthenticated={this.props.authedUser}  component={SignInPage} />
             </Switch>
           </div>
