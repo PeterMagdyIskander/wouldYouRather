@@ -5,26 +5,28 @@ import { Redirect } from "react-router-dom";
 
 class SignInPage extends Component {
   state = {
-    account: false,
-    selectedUser:'none',
+    selectedUser: "none",
+    redirectToReferrer: false,
   };
 
   handleOnChange = (e) => {
-    this.setState(()=>({
-      selectedUser:e.target.value,
-    }))
+    this.setState(() => ({
+      selectedUser: e.target.value,
+    }));
 
     e.preventDefault();
   };
-  handleOnClick=()=> {
+  handleOnClick = () => {
     const { dispatch } = this.props;
     dispatch(setAuthedUser(this.state.selectedUser));
-    this.setState(() => ({ account: true }))
-  }
+    this.setState(() => ({ redirectToReferrer: true }));
+  };
 
   render() {
-    if (this.state.account === true) {
-      return <Redirect to="/" />;
+    const { from } = this.props.location.state || { from: { pathname: "/" } };
+    const { redirectToReferrer } = this.state;
+    if (redirectToReferrer === true) {
+      return <Redirect to={from} />;
     }
     return (
       <div>

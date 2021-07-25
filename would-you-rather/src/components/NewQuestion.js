@@ -1,12 +1,13 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { handleAddQuestion } from '../actions/questions'
-
+import { Redirect } from 'react-router'
 
 class NewQuestion extends Component {
     state = {
         text1: '',
         text2:'',
+        toHome:false,
       }
       handleChange1 = (e) => {
         const text1 = e.target.value
@@ -30,17 +31,20 @@ class NewQuestion extends Component {
         console.log(text1,text2)
         const {dispatch}=this.props
         dispatch(handleAddQuestion(text1,text2))
-        //this.props.history.push(`/polls/${this.props.users[this.props.authedUser].questions[this.props.users[this.props.authedUser].questions.length]}`)
-
         this.setState(() => ({
           text1: '',
           text2: '',
-          
+          toHome:true,
         }))
       }
 
     render() {
-        const { text1,text2 } = this.state
+      const { text1,text2,toHome } = this.state
+      if(toHome===true){
+        return<Redirect to='/' />
+    }
+
+        
       return (
         <div>
             <h3>Create new Question</h3>

@@ -38,9 +38,9 @@ class Poll extends Component {
   };
 
   render() {
-    const { question, answered, choice } = this.props;
+    const { question, answered, choice,found } = this.props;
 
-    if (answered === true) {
+    if (answered === true&&found===true) {
       return (
         <div>
           <h3>{question.author} asks:</h3>
@@ -64,7 +64,7 @@ class Poll extends Component {
           )}
         </div>
       );
-    } else {
+    } else if(found===true) {
       return (
         <div>
           <h3>{question.author} asks:</h3>
@@ -101,6 +101,10 @@ class Poll extends Component {
           </form>
         </div>
       );
+    }else{
+      return(
+        <h3>404 question not found</h3>
+      )
     }
   }
 }
@@ -121,6 +125,7 @@ function mapStateToProps({ questions, users, authedUser }, props) {
     choice: choice,
     qid: id,
     authedUser: authedUser,
+    found:Object.keys(questions).includes(id)?true:false
   };
 }
 
